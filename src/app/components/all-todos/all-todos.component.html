@@ -1,7 +1,22 @@
 
+
+<div class="all-todos">
+
+
+
 <h1>{{error}}</h1>
 
 <div *ngFor="let todo of todos">
+    <div class="todo-card">
+            <div class="todo-content">
     <input type="checkbox" [checked]="todo.checked">
     {{todo.title}}
+    </div>
+    <div class="todo-buttons">
+    <button>Edit</button>
+    <button>Delete</button>
+    </div>
+    </div>
+</div>
+
 </div>
