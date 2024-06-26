@@ -1,8 +1,6 @@
-import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
-import { environment } from '../../../environments/environment.development';
-import { lastValueFrom } from 'rxjs';
 import { CommonModule } from '@angular/common';
+import { TodoServiceService } from '../../services/todo-service.service';
 
 @Component({
   selector: 'app-all-todos',
@@ -16,12 +14,12 @@ export class AllTodosComponent implements OnInit {
   todos:any = [];
   error: string = '';
   
-  constructor(private http: HttpClient) { }
+  constructor(public ts: TodoServiceService) { }
   
   
   async ngOnInit() {
     try{
-    this.todos = await this.loadTodos();
+    this.todos = await this.ts.loadTodoService();
     console.log(this.todos);  
     }catch(e){
       this.error = 'Could not load todos';
@@ -29,9 +27,16 @@ export class AllTodosComponent implements OnInit {
     }  
   }
 
-  loadTodos() {
-    const url =  environment.baseUrl + '/todos/';
-    return lastValueFrom(this.http.get(url));
+  createTodo(){
+    let todo = {
+      title: 'New Todo',
+      description: 'New Todo Description',
+      checked: false
+    }
+
+    this.ts.createTodoService(todo);
   }
+
+
 
 }
